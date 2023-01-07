@@ -17,6 +17,7 @@ ds_praktikum = Product(
             label='Chegirma',
             amount=-1000000, #-10.000.00 so'm
         ),
+        
     ],
     start_parameter="create_invoice_ds_praktikum",
     photo_url='https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera_assets.s3.amazonaws.com/xdp/decisionCriteriaBannerLogos/google-data-analytics.png?auto=format%2Ccompress&dpr=1&w=&h=260',

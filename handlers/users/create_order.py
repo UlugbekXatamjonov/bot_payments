@@ -8,6 +8,8 @@ from data.products import python_book, ds_praktikum,  FAST_SHIPPING, REGULAR_SHI
 from keyboards.inline.product_keys import build_keyboard
 
 
+from pprint import pprint
+
 @dp.message_handler(text="kitob")
 async def show_invoices(message: types.Message):
     caption = "<b>Pythonda Dasturlash Asoslari</b> kitobi.\n\n"
@@ -52,12 +54,12 @@ async def book_invoice(call: CallbackQuery):
     await call.answer()
 
 
-@dp.callback_query_handler(text="product:praktikum")
-async def praktikum_invoice(call: CallbackQuery):
-    await bot.send_invoice(chat_id=call.from_user.id,
-                           **ds_praktikum.generate_invoice(),
-                           payload="payload:praktikum")
-    await call.answer()
+    @dp.callback_query_handler(text="product:praktikum")
+    async def praktikum_invoice(call: CallbackQuery):
+        await bot.send_invoice(chat_id=call.from_user.id,
+                               **ds_praktikum.generate_invoice(),
+                               payload="payload:praktikum")
+        await call.answer()
 
 
 
@@ -81,9 +83,11 @@ async def choose_shipping(query: types.ShippingQuery):
 async def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery):
     await bot.answer_pre_checkout_query(pre_checkout_query_id=pre_checkout_query.id,
                                         ok=True)
+
+    pprint(pre_checkout_query)
     await bot.send_message(chat_id=pre_checkout_query.from_user.id,
                            text="Xaridingiz uchun rahmat!")
-    await bot.send_message(chat_id=ADMINS[0],
+    await bot.send_message(chat_id=ADMINS,
                            text=f"Quyidagi mahsulot sotildi: {pre_checkout_query.invoice_payload}\n"
                                 f"ID: {pre_checkout_query.id}\n"
                                 f"Telegram user: {pre_checkout_query.from_user.first_name}\n"                                
